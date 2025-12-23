@@ -17,7 +17,7 @@ const ROBOTS_ACTIONS: Resource[] = [
 	{ id: 'construction', name: 'Строительство' },
 ] as const
 
-export const HEROES_RESOURCES: Record<HeroEnum, Resource[]> = {
+export const HEROES_ACTIONS: Record<HeroEnum, Resource[]> = {
 	cultist: DEFAULT_ACTIONS,
 	demon: DEFAULT_ACTIONS,
 	elf: DEFAULT_ACTIONS,
