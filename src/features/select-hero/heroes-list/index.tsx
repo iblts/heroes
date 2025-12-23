@@ -1,4 +1,3 @@
-import { createRootRoute } from '@tanstack/react-router'
 import { HEROES } from '../data'
 import { HeroCard } from '../hero-card'
 import styles from './heroes-list.module.scss'
@@ -12,5 +11,3 @@ export const HeroesList = () => {
 		</ul>
 	)
 }
-
-export const Route = createRootRoute()

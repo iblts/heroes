@@ -25,7 +25,7 @@ export const heroSlice = createSlice({
 	},
 })
 
-export const {} = heroSlice.actions
+export const { focusHero, selectHero } = heroSlice.actions
 export const heroSelector = (state: RootState) => state.hero.selectedHero
 export const focusedHeroSelector = (state: RootState) => state.hero.focusedHero
 export default heroSlice.reducer
