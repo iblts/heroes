@@ -1,10 +1,12 @@
 import { configureStore } from '@reduxjs/toolkit'
 import { useDispatch, useSelector } from 'react-redux'
+import actionsReducer from '../features/actions/state'
 import heroReducer from '../features/select-hero/state'
 
 export const store = configureStore({
 	reducer: {
 		hero: heroReducer,
+		actions: actionsReducer,
 	},
 })
 

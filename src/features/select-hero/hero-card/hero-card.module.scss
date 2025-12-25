@@ -1,0 +1,15 @@
+.hero {
+	&:focus,
+	&:focus-visible {
+		background: var(--accent-8);
+		outline: none;
+	}
+}
+
+.hero.focused {
+	background: var(--accent-8);
+}
+
+.hero.selected {
+	background: var(--accent-6);
+}

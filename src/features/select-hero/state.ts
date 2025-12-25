@@ -16,8 +16,8 @@ export const heroSlice = createSlice({
 	name: 'hero',
 	initialState,
 	reducers: {
-		selectHero: (state, action: PayloadAction<HeroEnum | undefined>) => {
-			state.selectedHero = action.payload
+		selectHero: state => {
+			state.selectedHero = state.focusedHero
 		},
 		focusHero: (state, action: PayloadAction<HeroEnum | undefined>) => {
 			state.focusedHero = action.payload
