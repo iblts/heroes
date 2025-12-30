@@ -1,9 +1,8 @@
 import type { PayloadAction } from '@reduxjs/toolkit'
 import { createSlice } from '@reduxjs/toolkit'
-import type { RootState } from '../../lib/store'
 import type { HeroEnum } from './types'
 
-interface HeroState {
+export interface HeroState {
 	focusedHero?: HeroEnum
 	selectedHero?: HeroEnum
 }
@@ -22,10 +21,12 @@ export const heroSlice = createSlice({
 		focusHero: (state, action: PayloadAction<HeroEnum | undefined>) => {
 			state.focusedHero = action.payload
 		},
+		resetHero: state => {
+			state.focusedHero = undefined
+			state.selectedHero = undefined
+		},
 	},
 })
 
-export const { focusHero, selectHero } = heroSlice.actions
-export const heroSelector = (state: RootState) => state.hero.selectedHero
-export const focusedHeroSelector = (state: RootState) => state.hero.focusedHero
+export const { focusHero, selectHero, resetHero } = heroSlice.actions
 export default heroSlice.reducer

@@ -1,10 +1,8 @@
 import { Button } from '@radix-ui/themes'
 import { useNavigate } from 'react-router'
 import { HeroesList } from '../../features/select-hero/heroes-list'
-import {
-	focusedHeroSelector,
-	selectHero,
-} from '../../features/select-hero/state'
+import { focusedHeroSelector } from '../../features/select-hero/selectors'
+import { selectHero } from '../../features/select-hero/state'
 import { useAppDispatch, useAppSelector } from '../../lib/store'
 import styles from './home-page.module.scss'
 

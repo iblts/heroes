@@ -1,7 +1,19 @@
+import {
+	Anvil,
+	CircleDollarSign,
+	Flame,
+	Hammer,
+	Magnet,
+	Medal,
+	Snail,
+	Toolbox,
+	TreeDeciduous,
+	type LucideProps,
+} from 'lucide-react'
 import type { HeroEnum } from '../select-hero/types'
-import type { Resource } from './types'
+import type { Resource, ResourceEnum } from './types'
 
-const DEFAULT_ACTIONS: Resource[] = [
+export const ACTIONS_BASE: Resource[] = [
 	{ id: 'wood', name: 'Дерево' },
 	{ id: 'iron', name: 'Железо' },
 	{ id: 'coin', name: 'Монеты' },
@@ -9,7 +21,7 @@ const DEFAULT_ACTIONS: Resource[] = [
 	{ id: 'construction', name: 'Строительство' },
 ] as const
 
-const ROBOTS_ACTIONS: Resource[] = [
+const ACTIONS_ROBOT: Resource[] = [
 	{ id: 'wood', name: 'Дерево' },
 	{ id: 'processor', name: 'Процессор' },
 	{ id: 'coin', name: 'Монеты' },
@@ -18,16 +30,34 @@ const ROBOTS_ACTIONS: Resource[] = [
 ] as const
 
 export const HEROES_ACTIONS: Record<HeroEnum, Resource[]> = {
-	cultist: DEFAULT_ACTIONS,
-	demon: DEFAULT_ACTIONS,
-	elf: DEFAULT_ACTIONS,
-	gnome: DEFAULT_ACTIONS,
-	halfgrown: DEFAULT_ACTIONS,
-	human: DEFAULT_ACTIONS,
-	naga: DEFAULT_ACTIONS,
-	orc: DEFAULT_ACTIONS,
-	robot: ROBOTS_ACTIONS,
-	undead: DEFAULT_ACTIONS,
-	elemental: DEFAULT_ACTIONS,
-	gremlin: DEFAULT_ACTIONS,
+	cultist: ACTIONS_BASE,
+	demon: ACTIONS_BASE,
+	elf: ACTIONS_BASE,
+	gnome: ACTIONS_BASE,
+	halfgrown: ACTIONS_BASE,
+	human: ACTIONS_BASE,
+	naga: ACTIONS_BASE,
+	orc: ACTIONS_BASE,
+	robot: ACTIONS_ROBOT,
+	undead: ACTIONS_BASE,
+	elemental: ACTIONS_BASE,
+	gremlin: ACTIONS_BASE,
+}
+
+export const ACTIONS_ICONS: Record<
+	ResourceEnum,
+	React.ForwardRefExoticComponent<
+		Omit<LucideProps, 'ref'> & React.RefAttributes<SVGSVGElement>
+	>
+> = {
+	coin: CircleDollarSign,
+	wood: TreeDeciduous,
+	construction: Hammer,
+	iron: Anvil,
+	horseshoe: Magnet,
+	processor: Anvil,
+	rage: Flame,
+	crac: Snail,
+	points: Medal,
+	any: Toolbox,
 }

@@ -1,9 +1,33 @@
 import type { PayloadAction } from '@reduxjs/toolkit'
-import { createSlice } from '@reduxjs/toolkit'
+import { createAsyncThunk, createSlice } from '@reduxjs/toolkit'
 import type { RootState } from '../../lib/store'
 import type { ResourceEnum } from './types'
 
-interface ActionsState {
+export const checkFieldsThunk = createAsyncThunk<
+	void,
+	void,
+	{ state: RootState; rejectValue: string }
+>('actions/checkFields', async (_, { getState, rejectWithValue }) => {
+	const { actionsOrder } = getState().actions
+
+	const values = Object.values(actionsOrder).filter(el => el !== undefined)
+
+	if (values.length < 4)
+		return rejectWithValue('Вы выбрали слишком мало событий')
+
+	if (values.length > 4)
+		return rejectWithValue('Вы выбрали слишком много событий')
+
+	if (new Set(values).size !== values.length)
+		return rejectWithValue('Вы ввели повторяющееся значение')
+
+	if (values.some(value => value && (value > 4 || value < 1)))
+		return rejectWithValue(
+			'Вы ввели некорректное значение (больше 4 или меньше 1)'
+		)
+})
+
+export interface ActionsState {
 	editing?: ResourceEnum
 	error: string
 	actionsOrder: Record<ResourceEnum, number | undefined>
@@ -18,6 +42,10 @@ const initialState: ActionsState = {
 		horseshoe: undefined,
 		construction: undefined,
 		processor: undefined,
+		any: undefined,
+		crac: undefined,
+		points: undefined,
+		rage: undefined,
 	},
 }
 
@@ -37,36 +65,23 @@ export const actionsSlice = createSlice({
 		) => {
 			state.editing = action.payload
 		},
-		checkFields: state => {
-			const values = Object.values(state.actionsOrder).filter(
-				el => el !== undefined
-			)
-			if (values.length < 4) {
-				state.error = 'Вы выбрали слишком мало событий'
-				return
-			}
-			if (values.length > 4) {
-				state.error = 'Вы выбрали слишком много событий'
-				return
-			}
-			if (new Set(values).size !== values.length) {
-				state.error = 'Вы ввели повторяющееся значение'
-				return
-			}
-			if (values.some(value => value && (value > 4 || value < 1))) {
-				state.error = 'Вы ввели некорректное значение (больше 4 или меньше 1)'
-				return
-			}
-			state.error = ''
+		resetActions: store => {
+			store.actionsOrder = initialState.actionsOrder
+			store.editing = initialState.editing
+			store.error = initialState.error
 		},
+	},
+	extraReducers: builder => {
+		builder
+			.addCase(checkFieldsThunk.fulfilled, state => {
+				state.error = ''
+			})
+			.addCase(checkFieldsThunk.rejected, (state, action) => {
+				state.error = action.payload ?? 'Ошибка проверки'
+			})
 	},
 })
 
-export const { setActionOrder, setEditingOrder, checkFields } =
+export const { setActionOrder, setEditingOrder, resetActions } =
 	actionsSlice.actions
-export const actionsOrderErrorSelector = (state: RootState) =>
-	state.actions.error
-export const editingSelector = (state: RootState) => state.actions.editing
-export const actionsOrderSelector = (state: RootState) =>
-	state.actions.actionsOrder
 export default actionsSlice.reducer

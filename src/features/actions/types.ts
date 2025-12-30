@@ -5,6 +5,10 @@ export type ResourceEnum =
 	| 'horseshoe'
 	| 'construction'
 	| 'processor'
+	| 'rage'
+	| 'crac'
+	| 'points'
+	| 'any'
 
 export type ResourceNameEnum =
 	| 'Железо'
@@ -13,6 +17,9 @@ export type ResourceNameEnum =
 	| 'Подкова'
 	| 'Строительство'
 	| 'Процессор'
+	| 'Ярость'
+	| 'ПО'
+	| 'Любой ресурс'
 
 export type Resource = {
 	id: ResourceEnum

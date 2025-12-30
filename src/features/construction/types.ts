@@ -1,8 +1,10 @@
+import type { ResourceEnum } from '../actions/types'
+
 export interface Building {
 	id: string
 	name: string
 	description: string
-	price: { wood: number; iron: number; coin: number }
+	price: Partial<Record<ResourceEnum, number>>
 	level: number
-	dependency?: string
+	dependencies: string[]
 }
