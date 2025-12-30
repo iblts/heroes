@@ -6,7 +6,12 @@ import { ACTIONS_ICONS } from '../../actions/data'
 import type { ResourceEnum } from '../../actions/types'
 import { currentActionSelector } from '../../game/state'
 import { removeResource } from '../../resources/state'
-import { addBuilded, buildingsSelector } from '../state'
+import {
+	addBuilded,
+	buildingsSelector,
+	setThisRoundBuy,
+	thisRoundBuySelector,
+} from '../state'
 import type { Building } from '../types'
 import styles from './building-card.module.scss'
 
@@ -36,6 +41,7 @@ export const BuildingCard = ({
 			dispatch(removeResource({ action: 'rage', value: price.rage }))
 		}
 		dispatch(addBuilded(building.id))
+		dispatch(setThisRoundBuy(true))
 	}
 
 	const hasMoney =
@@ -46,9 +52,17 @@ export const BuildingCard = ({
 
 	const activeActions = useActiveActions()
 	const currentAction = useAppSelector(currentActionSelector)
+	const thisRoundBuy = useAppSelector(thisRoundBuySelector)
 
 	const disabled =
-		!hasMoney || isBuilded || activeActions[currentAction] !== 'construction'
+		!hasMoney ||
+		isBuilded ||
+		activeActions[currentAction] !== 'construction' ||
+		(building.dependencies.length > 0 &&
+			!building.dependencies.some(dependecy =>
+				buildings.includes(dependecy)
+			)) ||
+		thisRoundBuy
 
 	return (
 		<article className={styles.card}>

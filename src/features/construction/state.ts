@@ -4,10 +4,12 @@ import type { RootState } from '../../lib/store'
 
 export interface BuildingsState {
 	builded: string[]
+	thisRoundBuy: boolean
 }
 
 const initialState: BuildingsState = {
 	builded: [],
+	thisRoundBuy: false,
 }
 
 export const buildingsSlice = createSlice({
@@ -20,9 +22,15 @@ export const buildingsSlice = createSlice({
 		resetBuilded: state => {
 			state.builded = initialState.builded
 		},
+		setThisRoundBuy: (state, action: PayloadAction<boolean>) => {
+			state.thisRoundBuy = action.payload
+		},
 	},
 })
 
 export const buildingsSelector = (state: RootState) => state.buildings.builded
-export const { addBuilded, resetBuilded } = buildingsSlice.actions
+export const thisRoundBuySelector = (state: RootState) =>
+	state.buildings.thisRoundBuy
+export const { addBuilded, resetBuilded, setThisRoundBuy } =
+	buildingsSlice.actions
 export default buildingsSlice.reducer

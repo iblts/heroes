@@ -4,6 +4,7 @@ import { useDispatch } from 'react-redux'
 import { useActiveActions } from '../../../hook/useActiveActions'
 import { useAppSelector } from '../../../lib/store'
 import { ACTIONS_ICONS } from '../../actions/data'
+import { setThisRoundBuy } from '../../construction/state'
 import { addResource } from '../../resources/state'
 import {
 	currentActionSelector,
@@ -47,6 +48,7 @@ export const RoundInfo = () => {
 
 	const handleNextAction = () => {
 		dispatch(nextAction())
+		dispatch(setThisRoundBuy(false))
 	}
 
 	return (
